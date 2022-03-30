@@ -7,7 +7,7 @@ import com.venky.core.util.ObjectUtil;
 import com.venky.swf.db.Database;
 import com.venky.swf.db.model.io.json.JSONFormatter;
 import com.venky.swf.db.model.reflection.ModelReflector;
-import com.venky.swf.plugins.background.core.AsyncTaskManager;
+import com.venky.swf.plugins.background.core.AsyncTaskManagerFactory;
 import com.venky.swf.plugins.background.core.Task;
 import com.venky.swf.plugins.background.core.TaskManager;
 import com.venky.swf.plugins.background.messaging.MessageAdaptor;
@@ -64,7 +64,7 @@ public class BapAction {
                                 map.put(extensionName, (String) event.getExtension(extensionName));
                             }
                             //Subscription handler doesnot have db connection!
-                            AsyncTaskManager.getInstance().addAll(Collections.singletonList(new Action(request, map)));
+                            AsyncTaskManagerFactory.getInstance().addAll(Collections.singletonList(new Action(request, map)));
                         }
                     });
                 });

@@ -3,7 +3,7 @@ package in.succinct.beckn.portal.extensions;
 
 import com.venky.core.util.Bucket;
 import com.venky.swf.db.Database;
-import com.venky.swf.plugins.background.core.AsyncTaskManager;
+import com.venky.swf.plugins.background.core.AsyncTaskManagerFactory;
 import com.venky.swf.plugins.background.core.TaskManager;
 import com.venky.swf.plugins.background.messaging.MessageAdaptor;
 import com.venky.swf.plugins.background.messaging.MessageAdaptor.CloudEventHandler;
@@ -38,7 +38,7 @@ public class RatingConsumer {
             adaptor.getDefaultQueue().subscribe(topic.toString(), new CloudEventHandler() {
                 @Override
                 public void handle(String topic, CloudEvent event, SubscriptionHandle subscriptionHandle) {
-                    AsyncTaskManager.getInstance().addAll(Arrays.asList(() -> collate(event)));
+                    AsyncTaskManagerFactory.getInstance().addAll(Arrays.asList(() -> collate(event)));
                 }
 
                 public void collate(CloudEvent event) {

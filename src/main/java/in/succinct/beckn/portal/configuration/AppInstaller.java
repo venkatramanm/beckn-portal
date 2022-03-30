@@ -5,6 +5,7 @@ import com.venky.core.security.Crypt;
 import com.venky.core.util.ObjectUtil;
 import com.venky.swf.configuration.Installer;
 import com.venky.swf.db.Database;
+import com.venky.swf.db.model.Model;
 import com.venky.swf.db.model.reflection.ModelReflector;
 import com.venky.swf.plugins.collab.db.model.CryptoKey;
 import com.venky.swf.routing.Config;
@@ -12,6 +13,7 @@ import com.venky.swf.sql.Expression;
 import com.venky.swf.sql.Operator;
 import com.venky.swf.sql.Select;
 import com.venky.swf.sql.parser.SQLExpressionParser.EQ;
+import com.venky.swf.util.SharedKeys;
 import in.succinct.beckn.Request;
 import in.succinct.beckn.portal.db.model.api.UseCase;
 import in.succinct.beckn.portal.util.DomainMapper;
@@ -34,7 +36,24 @@ public class AppInstaller implements Installer {
                 generateBecknKeys(domain, type);
             }
         }
+        //fixOneTimeEncryptionMess(CryptoKey.class);
         //updateProviderLocationsMinMaxLatLng();
+    }
+    private <M extends Model> void fixOneTimeEncryptionMess(Class<M> modelClass){
+        for (Model m : new Select().from(modelClass).execute()){
+            try {
+                for (String f : m.getReflector().getEncryptedFields()) {
+                    m.getReflector().set(m, f, SharedKeys.getInstance().decrypt(m.getReflector().get(m, f)));
+                }
+                if (m.getReflector().getFields().contains("LAT")){
+                    m.getRawRecord().markDirty("LAT");
+                    m.getRawRecord().markDirty("LNG");
+                }
+                m.save(false);
+            }catch (Exception ex){
+                //
+            }
+        }
     }
 
     private void updateUseCases() {
