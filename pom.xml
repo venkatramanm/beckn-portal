@@ -8,7 +8,7 @@
   <description>portal</description>
     <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <revision>2.11-SNAPSHOT</revision>
+      <revision>2.11</revision>
     </properties>
     <build>
         <plugins>
@@ -71,22 +71,27 @@
         <dependency>
             <groupId>com.github.venkatramanm.swf-all</groupId>
             <artifactId>swf</artifactId>
-            <version>${revision}</version>
+            <version>[${revision},)</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.venkatramanm.swf-all</groupId>
+            <artifactId>swf-plugin-bootstrap</artifactId>
+            <version>[1.0,)</version>
         </dependency>
         <dependency>
             <groupId>com.github.venkatramanm.swf-all</groupId>
             <artifactId>swf-plugin-hivemq</artifactId>
-            <version>${revision}</version>
+            <version>[${revision},)</version>
         </dependency>
         <dependency>
             <groupId>com.github.venkatramanm.swf-all</groupId>
             <artifactId>swf-plugin-nats</artifactId>
-            <version>${revision}</version>
+            <version>[${revision},)</version>
         </dependency>
         <dependency>
             <groupId>com.github.venkatramanm.swf-all</groupId>
             <artifactId>swf-plugin-beckn</artifactId>
-            <version>${revision}</version>
+            <version>[${revision},)</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
